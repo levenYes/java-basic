@@ -1,0 +1,14 @@
+# MyBatis源码解读
+## 1.dao层接口为什么不需要写实现类？
+MyBatis通过JDK的动态代理方式，在启动加载配置文件时，根据配置Mapper的xml去生成Dao的实现。
+
+MapperRegistry是Mapper接口及其对应的代理对象工厂的注册中心。Configuration是MyBatis全局性的配置对象，在MyBatis初始化的过程中，所有配置信息会被解析成相应的对象并记录到Configuration对象中，而Configuration.mapperRegistry字段，记录当前使用的MapperRegistry对象。
+
+第一步：在Mybatis初始化过程中会读取映射配置文件以及Mapper接口中的注解信息，并调用MapperRegistry.addMapper()方法填充MapperRegistry.knowMappers集合，该集合的key是Mapper接口对应的Class对象，value为MapperProxyFactory工厂对象，可以为Mapper接口创建代理对象。
+
+第二步：在需要执行某SQL语句时，会先调用MapperRegistry.getMapper()方法获取实现了Mapper接口的代理对象，session.getMapper(BlogMapper.class)方法得到的实际上是MyBatis通过JDK动态代理为BlogMapper接口生成的代理对象。
+
+MapperMethod中封装了Mapper接口中对应方法的信息，以及对应SQL语句的信息。可以将MapperMethod看作连接Mapper接口以及映射配置文件中定义的SQL语句的桥梁。
+
+## 2.Mapper映射配置文件有什么用？
+每个映射配置文件的命名空间可以绑定一个Mapper接口，并注册到MapperRegistry中。
