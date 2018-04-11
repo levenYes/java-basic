@@ -1,4 +1,4 @@
-# Spring IoC基本知识
+# Spring框架基本知识
 ## 关于Spring IoC
 Spring IoC包含了最为基本的IoC容器BeanFactory的接口与实现，也就是说，在这个Spring的核心包中，不仅定义了IoC容器的最基本接口BeanFactory，也提供了一系列这个接口的实现，如XmlBeanFactory就是一个最基本的BeanFactory（IoC容器），从名字上可以看到，它能够支持通过XML文件配置的Bean定义信息。
 
