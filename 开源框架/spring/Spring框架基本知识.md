@@ -77,6 +77,9 @@ Spring是怎样对这些对象进行处理的，也就是bean对象生成以后�
 
 3）DispatcherServlet把获得的模型数据交给特定的视图对象，从而完成这些数据的视图呈现工作。这个视图呈现由视图对象的render方法完成。对应于不同的视图对象，render方法会完成不同的视图呈现处理。
 
+## Spring AOP设计原理
+在Spring的AOP模块中，一个主要的部分是代理对象的生成，而对于Spring应用，可以看到，是通过配置和调用Spring的ProxyFactoryBean来完成这个任务的。在ProxyFactoryBean中，封装了主要代理对象的生成过程。在这个生成过程中，可以使用JDK的Proxy和CGLIB两种生成方式。
+
 
 
 
