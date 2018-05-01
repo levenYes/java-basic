@@ -71,6 +71,11 @@ Spring是怎样对这些对象进行处理的，也就是bean对象生成以后�
 （6）BeanDefinitionResolver. resolveReference()
 
 ## Spring MVC的实现
+#### IoC容器启动的基本过程
+IoC容器的启动过程就是建立上下文的过程，该上下文是与ServletContext相伴而生的，同时也是IoC容器在Web应用环境中的具体表现之一。由ContextLoaderListener启动的上下文为根上下文。在根上下文的基础上，还有一个与Web MVC相关的上下文用来保存控制器（DispatcherServlet）需要的MVC对象，作为根上下文的子上下文，构成一个层次化的上下文体系。
+
+在Web容器中启动Spring应用程序时，首先建立根上下文，然后建立这个上下文体系的，这个上下文体系的建立是由ContextLoader来完成的。
+#### SpringMVC实现的大致步骤
 1）建立Controller和HTTP请求之间的映射关系。这个工作是由在handlerMapping中封装的HandlerExecutionChain对象来完成的，而对Controller控制器和HTTP请求的映射关系的配置是在Bean定义中描述，并在IoC容器初始化时，通过初始化HandlerMapping中完成的，这些定义的关系会被载入到一个handlerMap中使用。
 
 2）在MVC框架接收到HTTP请求的时候，DispatcherServlet会根据具体的URL请求信息，在HandlerMapping中进行查询，从而得到对应的HandlerExecutionChain，在里面封装了配置的Controller，这个请求对应的Controller会完成请求的相应动作，生成需要的ModelAndView对象，这个对象就像它的名字所表示的一样，可以从该对象中获得Model模型数据和视图对象。
